@@ -20,6 +20,7 @@
 #include <memory/WalkRequestBlock.h>
 
 using namespace std;
+namespace py = pybind11;
 
 // TODO: Temporary home. Not sure if this this the best place to put this.
 struct WalkVelocity
@@ -109,7 +110,7 @@ protected:
     SkillType currentKick;
     int currentKickType;
 
-    VecPosition me;
+    
     VecPosition myXDirection, myYDirection, myZDirection;
 
     VecPosition ball;
@@ -228,9 +229,12 @@ protected:
 
     SkillType demoKickingCircle();
 
+    void baseinit(const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_);
+
+
 public:
 
-    NaoBehavior(const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_);
+    NaoBehavior(const std::string teamName, int uNum, py::dict dict, const string& rsg_);
     virtual ~NaoBehavior();
 
     virtual std::string Init();
@@ -242,6 +246,8 @@ public:
     inline MotionCore* getCore() {
         return core;
     }
+
+    VecPosition me;
 };
 
 #endif // NAOBEHAVIOR_H

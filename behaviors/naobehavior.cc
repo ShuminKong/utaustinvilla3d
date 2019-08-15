@@ -16,14 +16,29 @@
 
 extern int agentBodyType;
 
+/*
+ * Constructor for binding 
+ */
+
+NaoBehavior::
+NaoBehavior(const std::string teamName, int uNum, py::dict dict, const string& rsg_):
+    rsg( rsg_ )
+{
+
+    map<string, string> pyparam;
+    for (auto pair : dict){
+        pyparam[py::str(pair.first)] = py::str(pair.second);
+    }
+    baseinit(teamName, uNum, pyparam, rsg);
+}
+
+
 
 /*
  * namedParams_ are a mapping between parameters and their values
  */
-NaoBehavior::
-NaoBehavior(const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_) :
-    namedParams( namedParams_ ),
-    rsg( rsg_ )
+void NaoBehavior::
+baseinit(const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_) 
 {
 
     //cout << "Constructing of Nao Behavior" << endl;
