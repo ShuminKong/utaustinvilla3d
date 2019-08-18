@@ -20,6 +20,10 @@ set(CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-new-dtags")
 
 set(CORE_PATH utwalk)
 
+find_package(PythonLibs REQUIRED)
+include_directories(${PYTHON_INCLUDE_DIRS})
+find_package(pybind11 REQUIRED) 
+
 include_directories(
 ${CORE_PATH}
 ${RCSSNET3D_INCLUDE_DIR}
@@ -93,6 +97,19 @@ ${Boost_SYSTEM_LIBRARY}
 dl
 ${CMAKE_THREAD_LIBS_INIT}
 rt 
+)
+
+
+add_subdirectory(pybind11)
+pybind11_add_module(utaustin utaustin.cpp ${SRCS})
+
+target_link_libraries(utaustin
+${RCSSNET3D_LIBRARY}
+${Boost_SYSTEM_LIBRARY}
+dl
+${CMAKE_THREAD_LIBS_INIT}
+rt 
+${PYTHON_LIBRARIES} 
 )
 
 # Automatically copy linked shared objects to libs directory after evey build

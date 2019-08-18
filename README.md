@@ -43,7 +43,8 @@ https://github.com/magmaOffenburg/RoboViz
 
 ### To build:
 ```bash
-cmake . 
+https://github.com/pybind/pybind11
+cmake -DPYTHON_INCLUDE_DIR:PATH=/usr/include/python3.6m .
 ```
  (If cmake can't find RCSSNET3D set the SPARK_DIR environmental variable to the path where you installed the server and then rerun cmake.  Also, if you installed rcssserver3d from a package instead of building it from source, you might need to install the rcssserver3d-dev package.)
  

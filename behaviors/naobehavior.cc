@@ -13,36 +13,20 @@
 // For UT Walk
 #include <common/InterfaceInfo.h>
 #include <motion/MotionModule.h>
+#include <boost/stacktrace.hpp>
 
 extern int agentBodyType;
-
 /*
  * Constructor for binding 
  */
 
 NaoBehavior::
-NaoBehavior(const std::string teamName, int uNum, py::dict dict, const string& rsg_):
+NaoBehavior(const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_) :
+    params( namedParams_ ),
     rsg( rsg_ )
 {
-
-    map<string, string> pyparam;
-    for (auto pair : dict){
-        pyparam[py::str(pair.first)] = py::str(pair.second);
-    }
-    baseinit(teamName, uNum, pyparam, rsg);
-}
-
-
-
-/*
- * namedParams_ are a mapping between parameters and their values
- */
-void NaoBehavior::
-baseinit(const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_) 
-{
-
-    //cout << "Constructing of Nao Behavior" << endl;
-
+    namedParams.insert(params.begin(), params.end());
+    try {
     srand ((unsigned)time(NULL) );
     srand48((unsigned)time(NULL));
 
@@ -84,7 +68,14 @@ baseinit(const std::string teamName, int uNum, const map<string, string>& namedP
                         raw_joint_angles_,
                         raw_sensors_ );
 
+    }
+    catch (const std::string& ex)
+    {
+        cerr << ex << endl;
+        // std::cout << boost::stacktrace::stacktrace()<< endl;
 
+        exit(1);
+    }
 
     initBeamed = false;
     initialized = false;
@@ -105,11 +96,11 @@ baseinit(const std::string teamName, int uNum, const map<string, string>& namedP
 
     // TODO: Treat paths more correctly? (system independent way)
     try {
-        readSkillsFromFile( "./skills/stand.skl" );
-        readSkillsFromFile( "./skills/kick.skl" );
+        readSkillsFromFile( "./utaustinvilla3d/skills/stand.skl" );
+        readSkillsFromFile( "./utaustinvilla3d/skills/kick.skl" );
 
         // ik skills
-        readSkillsFromFile( "./skills/kick_ik_0.skl" );
+        readSkillsFromFile( "./utaustinvilla3d/skills/kick_ik_0.skl" );
         // end ik skills
 
     }
@@ -478,8 +469,8 @@ void NaoBehavior::readSkillsFromFile( const std::string& filename) {
                 ++i;
             }
 
-            map<string, string>::const_iterator it = namedParams.find( param );
-            if( it == namedParams.end() ) {
+            map<string, string>::const_iterator it = params.find( param );
+            if( it == params.end() ) {
                 throw "Missing parameter in skill file " + filename + ": " + param;
             }
             skillDescription += it->second;
@@ -1088,4 +1079,12 @@ string NaoBehavior::getMonMessage() {
     string ret = monMsg;
     monMsg = "";
     return ret;
+}
+
+string NaoBehavior::getPosition() {
+    // return me.getX() << " " << me.getY() << " " << me.getZ();
+    char buff[100];
+    snprintf(buff, sizeof(buff), "%.4f %.4f %.4f", me.getX(), me.getY(), me.getZ());
+    std::string buffAsStdStr = buff;
+    return buffAsStdStr;
 }

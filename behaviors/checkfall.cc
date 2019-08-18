@@ -14,7 +14,6 @@
   From fallenUp or fallenDown, fallState 3 leads to a sequence of fallStates
   that is ultimately reset to 0.
  */
-
 bool NaoBehavior::checkingFall() {
 
     VecPosition accel = bodyModel->getAccelRates();
@@ -96,7 +95,7 @@ bool NaoBehavior::checkingFall() {
             currentFallStateStartTime = worldModel->getTime();
         }
 
-        if(worldModel->getTime() > (fallTimeStamp + (fallenDown ? atof(namedParams.find("getup_parms_stateDownInitialWait")->second.c_str()) : atof(namedParams.find("getup_parms_stateUpInitialWait")->second.c_str())))) {
+        if(worldModel->getTime() > (fallTimeStamp + (fallenDown ? atof(params.find("getup_parms_stateDownInitialWait")->second.c_str()) : atof(params.find("getup_parms_stateUpInitialWait")->second.c_str())))) {
             fallTimeStamp = -1;
             fallState = 1;
             currentFallStateStartTime = -1.0;
@@ -135,25 +134,25 @@ bool NaoBehavior::checkingFall() {
                 currentFallStateStartTime = worldModel->getTime();
             }
 
-            bodyModel->setTargetAngle(EFF_LA1, atof(namedParams.find("getup_parms_stateDown3A1")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RA1, atof(namedParams.find("getup_parms_stateDown3A1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LA1, atof(params.find("getup_parms_stateDown3A1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RA1, atof(params.find("getup_parms_stateDown3A1")->second.c_str()));
 
             bodyModel->setTargetAngle(EFF_LA2, 0);
             bodyModel->setTargetAngle(EFF_RA2, 0);
 
-            bodyModel->setTargetAngle(EFF_LL3, atof(namedParams.find("getup_parms_stateDown3L3")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL3, atof(namedParams.find("getup_parms_stateDown3L3")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL3, atof(params.find("getup_parms_stateDown3L3")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL3, atof(params.find("getup_parms_stateDown3L3")->second.c_str()));
 
             if (bodyModel->hasToe()) {
-                bodyModel->setTargetAngle(EFF_LL7, atof(namedParams.find("getup_parms_stateDown3L7")->second.c_str()));
-                bodyModel->setTargetAngle(EFF_RL7, atof(namedParams.find("getup_parms_stateDown3L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_LL7, atof(params.find("getup_parms_stateDown3L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_RL7, atof(params.find("getup_parms_stateDown3L7")->second.c_str()));
             }
 
             if (fallTimeWait < 0) {
                 fallTimeWait = worldModel->getTime();
             }
 
-            if(worldModel->getTime() - currentFallStateStartTime > atof(namedParams.find("getup_parms_stateDown3MinTime")->second.c_str())) {
+            if(worldModel->getTime() - currentFallStateStartTime > atof(params.find("getup_parms_stateDown3MinTime")->second.c_str())) {
                 fallState = 4;
                 currentFallStateStartTime = -1.0;
                 fallTimeStamp = worldModel->getTime();
@@ -178,15 +177,15 @@ bool NaoBehavior::checkingFall() {
                 currentFallStateStartTime = worldModel->getTime();
             }
 
-            bodyModel->setTargetAngle(EFF_LL1, atof(namedParams.find("getup_parms_stateDown5L1")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL1, atof(namedParams.find("getup_parms_stateDown5L1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL1, atof(params.find("getup_parms_stateDown5L1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL1, atof(params.find("getup_parms_stateDown5L1")->second.c_str()));
 
             bodyModel->setTargetAngle(EFF_LL5, 0);
             bodyModel->setTargetAngle(EFF_RL5, 0);
 
             if (bodyModel->hasToe()) {
-                bodyModel->setTargetAngle(EFF_LL7, atof(namedParams.find("getup_parms_stateDown5L7")->second.c_str()));
-                bodyModel->setTargetAngle(EFF_RL7, atof(namedParams.find("getup_parms_stateDown5L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_LL7, atof(params.find("getup_parms_stateDown5L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_RL7, atof(params.find("getup_parms_stateDown5L7")->second.c_str()));
             }
 
 
@@ -194,7 +193,7 @@ bool NaoBehavior::checkingFall() {
                 fallTimeWait = worldModel->getTime();
             }
 
-            if(worldModel->getTime() - currentFallStateStartTime > atof(namedParams.find("getup_parms_stateDown5MinTime")->second.c_str())) {
+            if(worldModel->getTime() - currentFallStateStartTime > atof(params.find("getup_parms_stateDown5MinTime")->second.c_str())) {
                 fallState = 6;
                 currentFallStateStartTime = -1.0;
                 fallTimeStamp = worldModel->getTime();
@@ -218,22 +217,22 @@ bool NaoBehavior::checkingFall() {
                 currentFallStateStartTime = worldModel->getTime();
             }
 
-            bodyModel->setTargetAngle(EFF_LL1, atof(namedParams.find("getup_parms_stateDown7L1")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL1, atof(namedParams.find("getup_parms_stateDown7L1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL1, atof(params.find("getup_parms_stateDown7L1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL1, atof(params.find("getup_parms_stateDown7L1")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LL3, atof(namedParams.find("getup_parms_stateDown7L3")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL3, atof(namedParams.find("getup_parms_stateDown7L3")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL3, atof(params.find("getup_parms_stateDown7L3")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL3, atof(params.find("getup_parms_stateDown7L3")->second.c_str()));
 
             if (bodyModel->hasToe()) {
-                bodyModel->setTargetAngle(EFF_LL7, atof(namedParams.find("getup_parms_stateDown7L7")->second.c_str()));
-                bodyModel->setTargetAngle(EFF_RL7, atof(namedParams.find("getup_parms_stateDown7L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_LL7, atof(params.find("getup_parms_stateDown7L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_RL7, atof(params.find("getup_parms_stateDown7L7")->second.c_str()));
             }
 
             if (fallTimeWait < 0) {
                 fallTimeWait = worldModel->getTime();
             }
 
-            if(worldModel->getTime() - currentFallStateStartTime > atof(namedParams.find("getup_parms_stateDown7MinTime")->second.c_str())) {
+            if(worldModel->getTime() - currentFallStateStartTime > atof(params.find("getup_parms_stateDown7MinTime")->second.c_str())) {
                 fallState = 8;
                 currentFallStateStartTime = -1.0;
                 fallTimeStamp = worldModel->getTime();
@@ -266,7 +265,7 @@ bool NaoBehavior::checkingFall() {
                 fallTimeWait = worldModel->getTime();
             }
 
-            if(worldModel->getTime() - currentFallStateStartTime > atof(namedParams.find("getup_parms_stateDown10MinTime")->second.c_str())) {
+            if(worldModel->getTime() - currentFallStateStartTime > atof(params.find("getup_parms_stateDown10MinTime")->second.c_str())) {
                 fallState = 10;
                 currentFallStateStartTime = -1.0;
                 fallTimeStamp = worldModel->getTime();
@@ -308,28 +307,28 @@ bool NaoBehavior::checkingFall() {
                 currentFallStateStartTime = worldModel->getTime();
             }
 
-            bodyModel->setTargetAngle(EFF_LA1, atof(namedParams.find("getup_parms_stateUp3A1")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RA1, atof(namedParams.find("getup_parms_stateUp3A1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LA1, atof(params.find("getup_parms_stateUp3A1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RA1, atof(params.find("getup_parms_stateUp3A1")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LA2, atof(namedParams.find("getup_parms_stateUp3A2")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RA2, -atof(namedParams.find("getup_parms_stateUp3A2")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LA2, atof(params.find("getup_parms_stateUp3A2")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RA2, -atof(params.find("getup_parms_stateUp3A2")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LA4, atof(namedParams.find("getup_parms_stateUp3A4")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RA4, -atof(namedParams.find("getup_parms_stateUp3A4")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LA4, atof(params.find("getup_parms_stateUp3A4")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RA4, -atof(params.find("getup_parms_stateUp3A4")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LL3, atof(namedParams.find("getup_parms_stateUp3L3")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL3, atof(namedParams.find("getup_parms_stateUp3L3")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL3, atof(params.find("getup_parms_stateUp3L3")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL3, atof(params.find("getup_parms_stateUp3L3")->second.c_str()));
 
             if (bodyModel->hasToe()) {
-                bodyModel->setTargetAngle(EFF_LL7, atof(namedParams.find("getup_parms_stateUp3L7")->second.c_str()));
-                bodyModel->setTargetAngle(EFF_RL7, atof(namedParams.find("getup_parms_stateUp3L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_LL7, atof(params.find("getup_parms_stateUp3L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_RL7, atof(params.find("getup_parms_stateUp3L7")->second.c_str()));
             }
 
             if (fallTimeWait < 0) {
                 fallTimeWait = worldModel->getTime();
             }
 
-            if(worldModel->getTime() - currentFallStateStartTime > atof(namedParams.find("getup_parms_stateUp3MinTime")->second.c_str())) {
+            if(worldModel->getTime() - currentFallStateStartTime > atof(params.find("getup_parms_stateUp3MinTime")->second.c_str())) {
                 fallState = 4;
                 currentFallStateStartTime = -1.0;
                 fallTimeStamp = worldModel->getTime();
@@ -354,19 +353,19 @@ bool NaoBehavior::checkingFall() {
                 currentFallStateStartTime = worldModel->getTime();
             }
 
-            bodyModel->setTargetAngle(EFF_LL3, atof(namedParams.find("getup_parms_stateUp5L3")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL3, atof(namedParams.find("getup_parms_stateUp5L3")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL3, atof(params.find("getup_parms_stateUp5L3")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL3, atof(params.find("getup_parms_stateUp5L3")->second.c_str()));
 
             if (bodyModel->hasToe()) {
-                bodyModel->setTargetAngle(EFF_LL7, atof(namedParams.find("getup_parms_stateUp5L7")->second.c_str()));
-                bodyModel->setTargetAngle(EFF_RL7, atof(namedParams.find("getup_parms_stateUp5L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_LL7, atof(params.find("getup_parms_stateUp5L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_RL7, atof(params.find("getup_parms_stateUp5L7")->second.c_str()));
             }
 
             if (fallTimeWait < 0) {
                 fallTimeWait = worldModel->getTime();
             }
 
-            if(worldModel->getTime() - currentFallStateStartTime > atof(namedParams.find("getup_parms_stateUp5MinTime")->second.c_str())) {
+            if(worldModel->getTime() - currentFallStateStartTime > atof(params.find("getup_parms_stateUp5MinTime")->second.c_str())) {
                 fallState = 6;
                 currentFallStateStartTime = -1.0;
                 fallTimeStamp = worldModel->getTime();
@@ -397,19 +396,19 @@ bool NaoBehavior::checkingFall() {
             bodyModel->setTargetAngle(EFF_LA2, 0);
             bodyModel->setTargetAngle(EFF_RA2, 0);
 
-            bodyModel->setTargetAngle(EFF_LL1, atof(namedParams.find("getup_parms_stateUp7L1")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL1, atof(namedParams.find("getup_parms_stateUp7L1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL1, atof(params.find("getup_parms_stateUp7L1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL1, atof(params.find("getup_parms_stateUp7L1")->second.c_str()));
 
             if (bodyModel->hasToe()) {
-                bodyModel->setTargetAngle(EFF_LL7, atof(namedParams.find("getup_parms_stateUp7L7")->second.c_str()));
-                bodyModel->setTargetAngle(EFF_RL7, atof(namedParams.find("getup_parms_stateUp7L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_LL7, atof(params.find("getup_parms_stateUp7L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_RL7, atof(params.find("getup_parms_stateUp7L7")->second.c_str()));
             }
 
             if (fallTimeWait < 0) {
                 fallTimeWait = worldModel->getTime();
             }
 
-            if(worldModel->getTime() - currentFallStateStartTime > atof(namedParams.find("getup_parms_stateUp7MinTime")->second.c_str())) {
+            if(worldModel->getTime() - currentFallStateStartTime > atof(params.find("getup_parms_stateUp7MinTime")->second.c_str())) {
                 fallState = 8;
                 currentFallStateStartTime = -1.0;
                 fallTimeStamp = worldModel->getTime();
@@ -435,31 +434,31 @@ bool NaoBehavior::checkingFall() {
                 currentFallStateStartTime = worldModel->getTime();
             }
 
-            bodyModel->setTargetAngle(EFF_LA1, atof(namedParams.find("getup_parms_stateUp9A1")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RA1, atof(namedParams.find("getup_parms_stateUp9A1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LA1, atof(params.find("getup_parms_stateUp9A1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RA1, atof(params.find("getup_parms_stateUp9A1")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LL1, atof(namedParams.find("getup_parms_stateUp9L1")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL1, atof(namedParams.find("getup_parms_stateUp9L1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL1, atof(params.find("getup_parms_stateUp9L1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL1, atof(params.find("getup_parms_stateUp9L1")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LL4, atof(namedParams.find("getup_parms_stateUp9L4")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL4, atof(namedParams.find("getup_parms_stateUp9L4")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL4, atof(params.find("getup_parms_stateUp9L4")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL4, atof(params.find("getup_parms_stateUp9L4")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LL5, atof(namedParams.find("getup_parms_stateUp9L5")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL5, atof(namedParams.find("getup_parms_stateUp9L5")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL5, atof(params.find("getup_parms_stateUp9L5")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL5, atof(params.find("getup_parms_stateUp9L5")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LL6, atof(namedParams.find("getup_parms_stateUp9L6")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL6, -atof(namedParams.find("getup_parms_stateUp9L6")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL6, atof(params.find("getup_parms_stateUp9L6")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL6, -atof(params.find("getup_parms_stateUp9L6")->second.c_str()));
 
             if (bodyModel->hasToe()) {
-                bodyModel->setTargetAngle(EFF_LL7, atof(namedParams.find("getup_parms_stateUp9L7")->second.c_str()));
-                bodyModel->setTargetAngle(EFF_RL7, atof(namedParams.find("getup_parms_stateUp9L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_LL7, atof(params.find("getup_parms_stateUp9L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_RL7, atof(params.find("getup_parms_stateUp9L7")->second.c_str()));
             }
 
             if (fallTimeWait < 0) {
                 fallTimeWait = worldModel->getTime();
             }
 
-            if(worldModel->getTime() - currentFallStateStartTime > atof(namedParams.find("getup_parms_stateUp9MinTime")->second.c_str())) {
+            if(worldModel->getTime() - currentFallStateStartTime > atof(params.find("getup_parms_stateUp9MinTime")->second.c_str())) {
                 fallState = 10;
                 currentFallStateStartTime = -1.0;
                 fallTimeStamp = worldModel->getTime();
@@ -484,25 +483,25 @@ bool NaoBehavior::checkingFall() {
                 currentFallStateStartTime = worldModel->getTime();
             }
 
-            bodyModel->setTargetAngle(EFF_LA1, atof(namedParams.find("getup_parms_stateUp11A1")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RA1, atof(namedParams.find("getup_parms_stateUp11A1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LA1, atof(params.find("getup_parms_stateUp11A1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RA1, atof(params.find("getup_parms_stateUp11A1")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LL1, atof(namedParams.find("getup_parms_stateUp11L1")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL1, atof(namedParams.find("getup_parms_stateUp11L1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL1, atof(params.find("getup_parms_stateUp11L1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL1, atof(params.find("getup_parms_stateUp11L1")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LL5, atof(namedParams.find("getup_parms_stateUp11L5")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL5, atof(namedParams.find("getup_parms_stateUp11L5")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL5, atof(params.find("getup_parms_stateUp11L5")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL5, atof(params.find("getup_parms_stateUp11L5")->second.c_str()));
 
             if (bodyModel->hasToe()) {
-                bodyModel->setTargetAngle(EFF_LL7, atof(namedParams.find("getup_parms_stateUp11L7")->second.c_str()));
-                bodyModel->setTargetAngle(EFF_RL7, atof(namedParams.find("getup_parms_stateUp11L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_LL7, atof(params.find("getup_parms_stateUp11L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_RL7, atof(params.find("getup_parms_stateUp11L7")->second.c_str()));
             }
 
             if (fallTimeWait < 0) {
                 fallTimeWait = worldModel->getTime();
             }
 
-            if(worldModel->getTime() - currentFallStateStartTime > atof(namedParams.find("getup_parms_stateUp11MinTime")->second.c_str())) {
+            if(worldModel->getTime() - currentFallStateStartTime > atof(params.find("getup_parms_stateUp11MinTime")->second.c_str())) {
                 fallState = 12;
                 currentFallStateStartTime = -1.0;
                 fallTimeStamp = worldModel->getTime();
@@ -527,24 +526,24 @@ bool NaoBehavior::checkingFall() {
                 currentFallStateStartTime = worldModel->getTime();
             }
 
-            bodyModel->setTargetAngle(EFF_LA1, atof(namedParams.find("getup_parms_stateUp13A1")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RA1, atof(namedParams.find("getup_parms_stateUp13A1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LA1, atof(params.find("getup_parms_stateUp13A1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RA1, atof(params.find("getup_parms_stateUp13A1")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LL1, atof(namedParams.find("getup_parms_stateUp13L1")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL1, atof(namedParams.find("getup_parms_stateUp13L1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL1, atof(params.find("getup_parms_stateUp13L1")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL1, atof(params.find("getup_parms_stateUp13L1")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LL3, atof(namedParams.find("getup_parms_stateUp13L3")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL3, atof(namedParams.find("getup_parms_stateUp13L3")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL3, atof(params.find("getup_parms_stateUp13L3")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL3, atof(params.find("getup_parms_stateUp13L3")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LL4, atof(namedParams.find("getup_parms_stateUp13L4")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL4, atof(namedParams.find("getup_parms_stateUp13L4")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL4, atof(params.find("getup_parms_stateUp13L4")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL4, atof(params.find("getup_parms_stateUp13L4")->second.c_str()));
 
-            bodyModel->setTargetAngle(EFF_LL5, atof(namedParams.find("getup_parms_stateUp13L5")->second.c_str()));
-            bodyModel->setTargetAngle(EFF_RL5, atof(namedParams.find("getup_parms_stateUp13L5")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_LL5, atof(params.find("getup_parms_stateUp13L5")->second.c_str()));
+            bodyModel->setTargetAngle(EFF_RL5, atof(params.find("getup_parms_stateUp13L5")->second.c_str()));
 
             if (bodyModel->hasToe()) {
-                bodyModel->setTargetAngle(EFF_LL7, atof(namedParams.find("getup_parms_stateUp13L7")->second.c_str()));
-                bodyModel->setTargetAngle(EFF_RL7, atof(namedParams.find("getup_parms_stateUp13L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_LL7, atof(params.find("getup_parms_stateUp13L7")->second.c_str()));
+                bodyModel->setTargetAngle(EFF_RL7, atof(params.find("getup_parms_stateUp13L7")->second.c_str()));
             }
 
             if (fallTimeWait < 0) {
@@ -552,7 +551,7 @@ bool NaoBehavior::checkingFall() {
             }
 
             //      if(bodyModel->targetsReached()){
-            if(worldModel->getTime() - currentFallStateStartTime > atof(namedParams.find("getup_parms_stateUp13MinTime")->second.c_str())) {
+            if(worldModel->getTime() - currentFallStateStartTime > atof(params.find("getup_parms_stateUp13MinTime")->second.c_str())) {
                 fallState = 14;
                 currentFallStateStartTime = -1.0;
                 fallTimeStamp = worldModel->getTime();
@@ -586,7 +585,7 @@ bool NaoBehavior::checkingFall() {
                 fallTimeWait = worldModel->getTime();
             }
 
-            if(worldModel->getTime() - currentFallStateStartTime > atof(namedParams.find("getup_parms_stateUp15MinTime")->second.c_str())) {
+            if(worldModel->getTime() - currentFallStateStartTime > atof(params.find("getup_parms_stateUp15MinTime")->second.c_str())) {
                 fallState = 16;
                 currentFallStateStartTime = -1.0;
                 fallTimeStamp = worldModel->getTime();

@@ -30,7 +30,7 @@ SkillType NaoBehavior::kickBall(const int kickTypeToUse, const VecPosition &targ
 
     if (me.getDistanceTo(ball) > 1) {
         // Far away from the ball so walk toward target offset from the ball
-        VecPosition approachBallTarget = ball - kickDirection*atof(namedParams.find("drib_target")->second.c_str());
+        VecPosition approachBallTarget = ball - kickDirection*atof(params.find("drib_target")->second.c_str());
         return goToTarget(approachBallTarget);
     }
 
@@ -152,15 +152,15 @@ SkillType NaoBehavior::kickBallAtPresetTarget() {
 
         VecPosition ballTarget = ball;
 
-        target = ballTarget - (VecPosition(kickDirection)  * atof(namedParams.find("drib_target")->second.c_str()));
+        target = ballTarget - (VecPosition(kickDirection)  * atof(params.find("drib_target")->second.c_str()));
         target.setZ(0);
 
         VecPosition originalTarget = target;
-        target = navigateAroundBall(target, .5 /*PROXIMITY_TRESH*/,atof(namedParams.find("drib_coll_thresh")->second.c_str()));
+        target = navigateAroundBall(target, .5 /*PROXIMITY_TRESH*/,atof(params.find("drib_coll_thresh")->second.c_str()));
         target = collisionAvoidance(true /*Avoid teamate*/, false /*Avoid opponent*/, false /*Avoid ball*/, .5, .5, target,
                                     false /*fKeepDistance*/);
         target = collisionAvoidance(false /*Avoid teamate*/, false /*Avoid opponent*/, true /*Avoid ball*/, .5 /*PROXIMITY_TRESH*/,
-                                    atof(namedParams.find("drib_coll_thresh")->second.c_str()), target);
+                                    atof(params.find("drib_coll_thresh")->second.c_str()), target);
         VecPosition localTarget = worldModel->g2l(target);
         SIM::AngDeg localTargetAngle = atan2Deg(localTarget.getY(), localTarget.getX());
         //cout << "CIRCLE\t" << worldModel->getGameTime() << "\n";
@@ -262,15 +262,15 @@ SkillType NaoBehavior::kickBallAtTargetSimplePositioning(const VecPosition &targ
     VecPosition targetLoc = worldModel->g2l(stand_pos);
     double walkSpeed = 1;
 
-    if (ball.getAngleBetweenPoints(stand_pos, me) >= atof(namedParams.find("kick_gen_approach_navBallAngle")->second.c_str())) { // If we're not behind the ball, consider navigating around it
-        double navBallDist = atof(namedParams.find("kick_gen_approach_navBallDist")->second.c_str());
-        targetLoc = worldModel->g2l(navigateAroundBall(stand_pos, navBallDist, atof(namedParams.find("kick_gen_approach_navBallCollision")->second.c_str())));
+    if (ball.getAngleBetweenPoints(stand_pos, me) >= atof(params.find("kick_gen_approach_navBallAngle")->second.c_str())) { // If we're not behind the ball, consider navigating around it
+        double navBallDist = atof(params.find("kick_gen_approach_navBallDist")->second.c_str());
+        targetLoc = worldModel->g2l(navigateAroundBall(stand_pos, navBallDist, atof(params.find("kick_gen_approach_navBallCollision")->second.c_str())));
     }
 
     SIM::AngDeg walkDirection = targetLoc.getTheta();
     targetLoc.setZ(0);
 
-    if (me.getDistanceTo(stand_pos) > atof(namedParams.find("kick_gen_approach_turnDist")->second.c_str())) { // Face toward stand_pos (to facilitate walking to it) until close enough. Then face the correct angle.
+    if (me.getDistanceTo(stand_pos) > atof(params.find("kick_gen_approach_turnDist")->second.c_str())) { // Face toward stand_pos (to facilitate walking to it) until close enough. Then face the correct angle.
         VecPosition localStandPos = worldModel->g2l(stand_pos);
         localStandPos.setZ(0);
         SIM::AngDeg localSPAngle = atan2Deg(localStandPos.getY(), localStandPos.getX());
@@ -282,14 +282,14 @@ SkillType NaoBehavior::kickBallAtTargetSimplePositioning(const VecPosition &targ
 
     const double MPS_SCALE = 43.674733875; // multiply particle filter's velocity estimate by this to get m/s
     /*const*/
-    double MAX_DECEL_X = atof(namedParams.find("kick_gen_approach_maxDecelX")->second.c_str()); // m/s^2
-    const double MAX_DECEL_Y = atof(namedParams.find("kick_gen_approach_maxDecelY")->second.c_str()); //m/s^2 // TODO: The command getWalk(90, 0, 1) doesn't actually cause the robot to walk directly to the side...
+    double MAX_DECEL_X = atof(params.find("kick_gen_approach_maxDecelX")->second.c_str()); // m/s^2
+    const double MAX_DECEL_Y = atof(params.find("kick_gen_approach_maxDecelY")->second.c_str()); //m/s^2 // TODO: The command getWalk(90, 0, 1) doesn't actually cause the robot to walk directly to the side...
     const double MAX_VELOCITY_Y = 0.3;//core->motion_->getMaxYSpeed(); // m/s
     const double MAX_VELOCITY_X = 0.8;//core->motion_->getMaxXSpeed(); // m/s
     /*const*/
-    double BUFFER_DIST = atof(namedParams.find("kick_gen_approach_buff")->second.c_str()); // Try to stop this far behind the ball
+    double BUFFER_DIST = atof(params.find("kick_gen_approach_buff")->second.c_str()); // Try to stop this far behind the ball
 
-    VecPosition estimatedVelocity = particleFilter->getOdometryDisplacementEstimateXY() * MPS_SCALE + atof(namedParams.find("kick_gen_approach_estVelCorrection")->second.c_str());
+    VecPosition estimatedVelocity = particleFilter->getOdometryDisplacementEstimateXY() * MPS_SCALE + atof(params.find("kick_gen_approach_estVelCorrection")->second.c_str());
 
     double theta = targetLoc.getTheta();
     if (targetLoc.getX() >= 0 && targetLoc.getY() >= 0) {
@@ -325,7 +325,7 @@ SkillType NaoBehavior::kickBallAtTargetSimplePositioning(const VecPosition &targ
 
 
 double NaoBehavior::getParameter(const string& name) {
-    return atof(namedParams.find(name)->second.c_str());
+    return atof(params.find(name)->second.c_str());
 }
 
 double NaoBehavior::getStdNameParameter(const SkillType kick_skill, const string& parameter) {
@@ -406,6 +406,6 @@ VecPosition NaoBehavior::navigateAroundBall(VecPosition target, double PROXIMITY
     }
 
     target = collisionAvoidance(true/*Avoid teammate*/,false/*Avoid opponent*/,false/*Avoid ball*/,.5,.5,target, false /*fKeepDistance*/);
-    target = collisionAvoidance(false/*Avoid teammate*/,false/*Avoid opponent*/,true/*Avoid ball*/,PROXIMITY_THRESH,atof(namedParams.find("drib_coll_thresh")->second.c_str()),target);
+    target = collisionAvoidance(false/*Avoid teammate*/,false/*Avoid opponent*/,true/*Avoid ball*/,PROXIMITY_THRESH,atof(params.find("drib_coll_thresh")->second.c_str()),target);
     return target;
 }

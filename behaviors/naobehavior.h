@@ -20,8 +20,7 @@
 #include <memory/WalkRequestBlock.h>
 
 using namespace std;
-namespace py = pybind11;
-
+extern map<string, string> namedParams;
 // TODO: Temporary home. Not sure if this this the best place to put this.
 struct WalkVelocity
 {
@@ -56,7 +55,7 @@ protected:
     string classname;
 
     map< SkillType, boost::shared_ptr<Skill> > skills;
-    const map<string, string>& namedParams;
+    const map<string, string>& params;
     string rsg;
 
     std::string agentTeamName;
@@ -127,7 +126,7 @@ protected:
     virtual void resetSkills();
     void resetScales();
     void refresh();
-    void act();
+    
 
     // ----------------------------------------------------
     // ---------  THESE FUNCTIONS ARE
@@ -229,12 +228,13 @@ protected:
 
     SkillType demoKickingCircle();
 
-    void baseinit(const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_);
+    // void baseinit(const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_);
 
 
 public:
 
-    NaoBehavior(const std::string teamName, int uNum, py::dict dict, const string& rsg_);
+    // NaoBehavior(const std::string teamName, int uNum, py::dict dict, const string& rsg_);
+    NaoBehavior(const std::string teamName, int uNum, const map<string, string>& namedParams_, const string& rsg_);
     virtual ~NaoBehavior();
 
     virtual std::string Init();
@@ -246,7 +246,8 @@ public:
     inline MotionCore* getCore() {
         return core;
     }
-
+    string getPosition();
+    void act();
     VecPosition me;
 };
 
