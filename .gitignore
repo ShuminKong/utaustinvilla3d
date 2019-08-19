@@ -8,3 +8,4 @@ agentspark
 pybind11
 libs/*.so*
 *cpython*
+.vscode
