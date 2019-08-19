@@ -18,7 +18,7 @@ endif(NOT CMAKE_CXX_FLAGS)
 
 set(CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-new-dtags")
 
-set(CORE_PATH utwalk)
+set(CORE_PATH src/utwalk)
 
 find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
@@ -54,35 +54,35 @@ set(CORE_FILES
 )
 
 set(SRCS
-  main.cc 
-  behaviors/behavior.cc
-  behaviors/naobehavior.cc
-  behaviors/checkfall.cc 
-  behaviors/kicking.cc 
-  behaviors/strategy.cc
-  behaviors/pkbehaviors.cc
-  behaviors/gazebobehavior.cc
-  servercomm/primitives.cc
-  parser/parser.cc 
-  math/hctmatrix.cc
-  math/vecposition.cc
-  math/Geometry.cc
-  worldmodel/worldmodel.cc
-  bodymodel/bodymodel.cc
-  particlefilter/PFLocalization.cc
-  particlefilter/Particle.cc
-  skills/skill.cc 
-  skills/curve3d.cc
-  ikfast/ikfast.cpp
-  headers/headers.cc
-  audio/audio.cc 
-  rvdraw/rvdraw.cc 
+  src/main.cc 
+  src/behaviors/behavior.cc
+  src/behaviors/naobehavior.cc
+  src/behaviors/checkfall.cc 
+  src/behaviors/kicking.cc 
+  src/behaviors/strategy.cc
+  src/behaviors/pkbehaviors.cc
+  src/behaviors/gazebobehavior.cc
+  src/servercomm/primitives.cc
+  src/parser/parser.cc 
+  src/math/hctmatrix.cc
+  src/math/vecposition.cc
+  src/math/Geometry.cc
+  src/worldmodel/worldmodel.cc
+  src/bodymodel/bodymodel.cc
+  src/particlefilter/PFLocalization.cc
+  src/particlefilter/Particle.cc
+  src/skills/skill.cc 
+  src/skills/curve3d.cc
+  src/ikfast/ikfast.cpp
+  src/headers/headers.cc
+  src/audio/audio.cc 
+  src/rvdraw/rvdraw.cc 
   ${CORE_FILES}
-  kalman/BallKF.cpp
-  kalman/PlayerKF.cpp 
-  kalman/OrigKalmanFilter.cpp
-  optimization/optimizationbehaviors.cc
-  stats/recordstatsbehavior.cc
+  src/kalman/BallKF.cpp
+  src/kalman/PlayerKF.cpp 
+  src/kalman/OrigKalmanFilter.cpp
+  src/optimization/optimizationbehaviors.cc
+  src/stats/recordstatsbehavior.cc
 )
 
 set(BINARY agentspark)
@@ -101,7 +101,7 @@ rt
 
 
 add_subdirectory(pybind11)
-pybind11_add_module(utaustin utaustin.cpp ${SRCS})
+pybind11_add_module(utaustin src/utaustin.cpp ${SRCS})
 
 target_link_libraries(utaustin
 ${RCSSNET3D_LIBRARY}
